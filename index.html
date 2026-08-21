@@ -512,16 +512,9 @@
     var telOk = telefoneValido(telefone);
     setInvalid('field-telefone', !telOk);
     if(!telOk) valido = false;
-    
-    var hojeStr = new Date().toISOString().split('T')[0];
-    var dataInvalida = !data || data < hojeStr;
-    setInvalid('field-data', dataInvalida);
-    if(dataInvalida) valido = false;
 
-    if(dataInvalida && data){
-    statusEl.className = 'status show err';
-    statusEl.textContent = 'Não é possível agendar em uma data que já passou. 😂😂';
-    }
+    setInvalid('field-data', !data);
+    if(!data) valido = false;
 
     if(!selectedSlot){
       statusEl.className = 'status show err';
@@ -578,6 +571,7 @@
         var msg = 'Não foi possível confirmar esse horário.';
         if(motivo === 'folga') msg = 'O barbeiro está de folga nesse dia. Escolha outra data.';
         if(motivo === 'ocupado') msg = 'Esse horário acabou de ser preenchido. Escolha outro.';
+        if(motivo === 'data_passada') msg = 'Não é possível agendar em uma data que já passou.';
         statusEl.className = 'status show err';
         statusEl.textContent = msg;
       }
