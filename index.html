@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Oswald:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <style>
   :root{
     --bg-deep: #14100b;
@@ -531,9 +530,16 @@
 
     if(!valido) return;
 
+    // O telefone digitado no site continua com 11 dígitos (DDD + número),
+    // mas o payload enviado ao n8n já sai com o código do país (55) na
+    // frente, no formato que a Evolution API espera. Assim, o número
+    // gravado no banco já nasce pronto para ser usado em qualquer
+    // mensagem de WhatsApp, sem precisar formatar de novo em cada fluxo.
+    var telefoneComDDI = '55' + telefone.replace(/\D/g, '');
+
     var payload = {
       nome: nome,
-      telefone: telefone.replace(/\D/g, ''),
+      telefone: telefoneComDDI,
       data: data,
       horario: selectedSlot
     };
