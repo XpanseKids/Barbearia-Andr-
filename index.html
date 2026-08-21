@@ -518,6 +518,11 @@
     setInvalid('field-data', dataInvalida);
     if(dataInvalida) valido = false;
 
+    if(dataInvalida && data){
+    statusEl.className = 'status show err';
+    statusEl.textContent = 'Não é possível agendar em uma data que já passou.';
+    }
+
     if(!selectedSlot){
       statusEl.className = 'status show err';
       statusEl.textContent = 'Escolha um horário disponível antes de continuar.';
